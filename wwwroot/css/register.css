@@ -1,0 +1,120 @@
+/* Styles specific to the registration page */
+
+/* Container styles for registration page */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Card styles for registration form */
+.register-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    animation: cardFadeIn 1s ease-in-out; /* Fade-in animation on load */
+}
+
+/* Keyframe animation for fading in elements */
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titles for registration form */
+.register-title {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* Form group for input fields */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Labels for form input fields */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* General styles for form controls (inputs, textareas) */
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus */
+}
+
+/* Focus state for form controls */
+.form-control:focus {
+    border-color: #6a11cb; /* Highlight border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(106, 17, 203, 0.25); /* Glow effect on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Styles for form check (checkbox/radio) groups */
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Input element within form check */
+.form-check-input {
+    margin-right: 10px;
+}
+
+/* Label for form check input */
+.form-check-label {
+    margin-bottom: 0;
+    color: #555;
+}
+
+/* Button styles for registration */
+.register-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2575fc; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+/* Hover state for registration button */
+.register-button:hover {
+    background-color: #6a11cb; /* Darker color on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Styles for validation error messages */
+.text-danger {
+    color: #dc3545; /* Red color for errors */
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}

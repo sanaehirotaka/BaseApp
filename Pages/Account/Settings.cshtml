@@ -1,0 +1,104 @@
+@page
+@model BaseApp.Pages.Account.SettingsModel
+@{
+    ViewData["Title"] = "プロフィール設定";
+}
+@section Head {
+    <link rel="stylesheet" href="~/css/Settings.css" asp-append-version="true" />
+}
+@section Scripts
+{
+    <script src="~/Pages/Account/Settings.cshtml.js" defer asp-append-version="true"></script>
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2 settings-container">
+        <h2>@ViewData["Title"]</h2>
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" disabled />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.DisplayName"></label>
+                <input asp-for="Input.DisplayName" class="form-control" />
+                <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.OldPassword"></label>
+                <input asp-for="Input.OldPassword" class="form-control" />
+                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.NewPassword"></label>
+                <input asp-for="Input.NewPassword" class="form-control" />
+                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-primary mt-3">保存</button>
+        </form>
+
+        <h3 class="mt-5">アクセストークン管理</h3>
+        <form method="post" asp-page-handler="GenerateAccessToken">
+            <button type="submit" class="btn btn-success mb-3">新しいアクセストークンを発行</button>
+        </form>
+
+        @if (Model.AccessTokens != null && Model.AccessTokens.Any())
+        {
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>トークン</th>
+                        <th>作成日時</th>
+                        <th>有効期限</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var token in Model.AccessTokens)
+                    {
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm token-value" value="@token.Token" readonly />
+                                    <button type="button" class="btn btn-outline-secondary btn-sm copy-token-button" data-token="@token.Token">コピー</button>
+                                </div>
+                                <small class="text-success copy-success-message" style="display:none;">コピーしました！</small>
+                            </td>
+                            <td>@token.CreatedAt.ToLocalTime().ToString("yyyy/MM/dd HH:mm")</td>
+                            <td>@token.ExpiresAt.ToLocalTime().ToString("yyyy/MM/dd HH:mm")</td>
+                            <td>
+                                <form method="post" asp-page-handler="RevokeAccessToken" class="revoke-token-form">
+                                    <input type="hidden" name="id" value="@token.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">破棄</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>発行されたアクセストークンはありません。</p>
+        }
+
+        @if (Model.AccessTokens != null && Model.AccessTokens.Any())
+        {
+            <h4 class="mt-4">SSOログインURL</h4>
+            <div class="input-group mb-3">
+                @{
+                    var ssoUrl = Url.Page("/Account/SSO", null, new { Token = Model.AccessTokens.First().Token }, ViewContext.HttpContext.Request.Scheme);
+                }
+                <input type="text" class="form-control" value="@ssoUrl" readonly />
+                <button type="button" class="btn btn-outline-secondary copy-sso-url-button" data-url="@ssoUrl">コピー</button>
+            </div>
+            <small class="text-success copy-sso-success-message" style="display:none;">コピーしました！</small>
+        }
+    </div>
+</div>

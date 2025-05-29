@@ -1,22 +1,34 @@
-html {
-  font-size: 14px;
-}
+/*
+ * General styles for the BaseApp application.
+ * This file contains styles for typography, layout, forms, and authentication pages.
+ */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
+/* Focus styles for interactive elements */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* Custom focus outline */
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%; /* Ensures html takes full height */
 }
 
-body {
-  margin-bottom: 60px;
+#main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+}
+
+/* Style for the user identity link to make it clearly a link */
+.user-identity-link {
+    text-decoration: underline !important; /* Ensure underline is always visible */
+    color: #007bff !important; /* Bootstrap primary blue color for links */
+}
+
+.user-identity-link:hover {
+    color: #0056b3 !important; /* Darker blue on hover */
+}
+.nav-link.btn {
+    --bs-btn-border-color: lightgray;
 }

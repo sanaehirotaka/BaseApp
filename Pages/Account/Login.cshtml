@@ -1,0 +1,54 @@
+@page
+@model BaseApp.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "ログイン";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@section Head {
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">おかえりなさい！</h2>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email" class="form-label"></label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password" class="form-label"></label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <input asp-for="Input.RememberMe" class="form-check-input" />
+                <label asp-for="Input.RememberMe" class="form-check-label"></label>
+            </div>
+            <button type="submit" class="btn btn-primary login-button">ログイン</button>
+            <p class="register-link">
+                アカウントをお持ちではありませんか？ <a asp-page="./Register">こちらから登録</a>
+            </p>
+        </form>
+
+        @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+        {
+            <div class="external-logins">
+                <p>または他のサービスでログイン</p>
+                <form id="external-account" asp-page-handler="ExternalLogin" method="post" class="form-horizontal">
+                    <div>
+                        @foreach (var provider in Model.ExternalLogins!)
+                        {
+                            <button type="submit" class="btn btn-primary btn-@(provider.Name.ToLower())" name="provider" value="@provider.Name" title="@provider.DisplayName を使用してログイン">
+                                @(provider.Name)でログイン
+                            </button>
+                        }
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>
